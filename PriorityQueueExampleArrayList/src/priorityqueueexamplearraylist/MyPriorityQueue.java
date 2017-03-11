@@ -18,29 +18,87 @@ public class MyPriorityQueue implements PQInterface {
         thePQueue = new ArrayList<PQElement>();
     }
     
+    /**
+     * This method will insert the given item into the queue based on its
+     * specified priority. The higher the priority, the closer the item will be
+     * inserted to head of the queue.
+     * @param priority
+     * @param element 
+     */
     @Override
-    public void enqueue(int priority, Object element) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void enqueue(int priority, Object item) {
+        int index;
+        PQElement element = new PQElement(priority, item);
+        
+        index = findInsertPosition(priority);
+        
+        if(index > size()){
+            thePQueue.add(element);
+        } else {
+            thePQueue.add(index, element);
+        }
+    }
+    
+    /**
+     * This method will find the correct position to insert an element
+     * in the queue based on its priority. It does this by iterating through the 
+     * array list, examining the elements priority.
+     * 
+     * If the priority is greater then or equal to the current element's
+     * priority, then we have found the insertion point.
+     * Otherwise, increment the position and continue testing against the
+     * other elements in the queue.
+     * @param priority
+     * @return 
+     */
+    private int findInsertPosition(int priority){
+        PQElement element;
+        boolean found = false;
+        int position = 0;
+        
+        while(position < thePQueue.size() && !found){
+            element = thePQueue.get(position);
+            if(priority > element.getPriority()){
+                found = true;
+            } else {
+                position = position + 1;
+            }
+        }
+        return position;
     }
 
     @Override
     public int size() {
-        thePQueue.size();
+        return thePQueue.size();
     }
 
     @Override
     public boolean isEmpty() {
-        thePQueue.isEmpty();
+        return thePQueue.isEmpty();
     }
 
     @Override
     public Object dequeue() {
-        throw new UnsupportedOperationException("Not support yet."); 
+        return thePQueue.remove(0);
     }
 
+    /**
+     * This method returns a string representation of the priority queue.
+     * It does through each node in the list, getting the value of the node
+     * and appending it to the string, strList, which it will finally return.
+     * @return 
+     */
     @Override
     public String formattedQueue() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PQElement element;
+        String strQueue = "";
+        
+        for(int i = 0; i < thePQueue.size(); i++){
+            element = thePQueue.get(i);
+            strQueue = strQueue + "[Priority=" + element.getPriority() +
+                    ",Element=" + element.getElement() + "]";
+        }
+        return strQueue;
     }
     
     
