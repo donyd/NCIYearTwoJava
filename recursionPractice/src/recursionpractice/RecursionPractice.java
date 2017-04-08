@@ -47,7 +47,7 @@ public class RecursionPractice {
     }
     
     public static String restOf(String aString){
-        return aString.substring(0, 1);
+        return aString.substring(1);
     }
       
     
@@ -60,6 +60,25 @@ public class RecursionPractice {
             return (n -1) + handShake(n-1);
         }
     }
+    
+    /**
+     * Searches an entered string and returns the number of occurences of
+     * an entered string value.
+     * @param strSearch
+     * @param strMain
+     * @return 
+     */
+    private static int occurrences(String strSearch, String strMain){
+        if(strMain.equals("")){
+            return 0;
+        } else if(strMain.startsWith(strSearch)){
+            return 1 + occurrences(strSearch, restOf(strMain));
+        } else {
+            return occurrences(strSearch, restOf(strMain));
+        }
+    }
+    
+   
 
     /**
      * @param args the command line arguments
